@@ -1,0 +1,8 @@
+.sidebar {
+  grid-area: sidebar;
+  overflow-y: auto;
+  //border-right: 1px solid var(--mui-palette-blue40-main);
+  position: fixed;
+  top: var(--header-height);
+  bottom: 0;
+}

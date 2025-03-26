@@ -1,0 +1,9 @@
+@use '../global/mixins' as *;
+
+.header {
+  grid-area: header;
+  padding: rem(25) 0 rem(15);
+  border-bottom: 1px solid var(--mui-palette-blue40-main);
+  position: sticky;
+  top: 0;
+}

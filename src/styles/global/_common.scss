@@ -1,0 +1,38 @@
+@use './mixins' as *;
+
+// === BASICS === //
+html {
+  scroll-behavior: smooth;
+  scroll-padding: rem(80);
+}
+
+#root {
+  min-height: 100svh;
+  height: 100%;
+
+  main {
+    grid-area: main;
+    height: 100%;
+  }
+}
+
+/* === CONTAINER & LAYOUT === */
+.container {
+  @include container;
+}
+
+/*!* To manage the border  *!
+hr {
+  border-color: var(--mui-palette-blue25-main);
+  border-top: 0;
+}*/
+
+.layout {
+  display: grid;
+  grid-template-columns: rem(300) 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "sidebar main";
+}

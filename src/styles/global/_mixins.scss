@@ -1,0 +1,41 @@
+@use 'sass:math';
+@use 'sass:map';
+@use './variables' as *;
+
+$breakpoints: (
+        xs: 0,
+        sm: 37.5rem,
+        md: 56.25rem, /* 600 */
+        lg: 75rem, /* 900 */
+        xl: 87.5rem, /* 1200px */
+        xxl: 106.25rem /* 1700px */
+);
+
+@mixin media-breakpoint-up($name) {
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($name) {
+  @media (max-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+@function rem($pixel) {
+  @if math.is-unitless($pixel) {
+    @return math.div($pixel, 16) + rem;
+  } @else {
+    @error 'Don\'t use units when using the rem() function; only numbers';
+  }
+}
+
+@mixin container {
+  width: min(100% - 3rem, var(--layout-max-width));
+  margin-inline: auto;
+
+  @include media-breakpoint-up(xl) {
+    width: min(100% - 2rem, var(--layout-max-width));
+  }
+}
