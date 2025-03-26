@@ -1,13 +1,33 @@
-import { NotebookTabs } from "lucide-react";
+import {Eye, Moon, NotebookTabs, Sun} from "lucide-react";
+import { useSidebar } from "../contexts/LayoutContext.tsx";
+import {useTheme} from "../contexts/ThemeContext.tsx";
 
 export const Sidebar = () => {
+    const {isOpen, toggleSidebar} = useSidebar();
+    const {theme, setTheme} = useTheme();
+
     return (
-        <aside className="sidebar">
+        <aside className={`sidebar${isOpen ? ' open' : ''}`}>
             Sidebar
-            <div className="content">
-                <NotebookTabs />
-                Hide Sidebar
-            </div>
+            {isOpen ? (
+                <button type="button" className="content" onClick={toggleSidebar}>
+                    <NotebookTabs />
+                    Hide Sidebar
+                </button>
+            ) : (
+                <button type="button" className="content" onClick={toggleSidebar}>
+                    <Eye />
+                </button>
+            )}
+            {theme === 'dark' ? (
+                <div className='themeColor' onClick={() => setTheme('light')}>
+                    <Sun strokeWidth={1} />
+                </div>
+            ) : (
+                <div className='themeColor' onClick={() => setTheme('dark')}>
+                    <Moon strokeWidth={1} />
+                </div>
+            )}
         </aside>
     );
 };

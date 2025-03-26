@@ -1,12 +1,23 @@
 import { createRootRoute, Outlet } from '@tanstack/react-router';
-import {Header} from "../layouts/Header.tsx";
-import {Sidebar} from "../layouts/Sidebar.tsx";
+import { SidebarProvider } from "../contexts/LayoutContext.tsx";
+import {ThemeProvider} from "../contexts/ThemeContext.tsx";
+import { Header } from "../layouts/Header.tsx";
+import { Sidebar } from "../layouts/Sidebar.tsx";
 // import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
 export const Route = createRootRoute({
     component: () => (
-        <>
-            {/*<div>
+        <ThemeProvider defaultTheme="system" storageKey="theme">
+            <SidebarProvider>
+                <Header />
+                <Sidebar />
+                <Outlet />
+                {/*<TanStackRouterDevtools />*/}
+            </SidebarProvider>
+        </ThemeProvider>
+    ),
+});
+{/*<div>
                 <Link to="/">
                     Home
                 </Link>
@@ -14,11 +25,4 @@ export const Route = createRootRoute({
                     About
                 </Link>
             </div>*/}
-            {/*<hr/>*/}
-            <Header />
-            <Sidebar />
-            <Outlet />
-            {/*<TanStackRouterDevtools />*/}
-        </>
-    ),
-});
+{/*<hr/>*/}

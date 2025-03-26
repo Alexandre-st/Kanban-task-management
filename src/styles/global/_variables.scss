@@ -1,4 +1,3 @@
-
 /* === CSS Variables === */
 :root {
   /* === LAYOUT === */
@@ -6,5 +5,18 @@
   --content-max-width: 71.875rem; /* 1150px; */
   --header-height: 4rem;
 
-  /* === COLORS === */
+  /* === LIGHT COLORS === */
+  --white: #fff;
+
+  /* === DARK COLORS === */
+  --black: #000;
+}
+
+/* === THEME SWITCHER === */
+[data-theme='light'] {
+  --background-color: var(--white);
+}
+
+[data-theme='dark'] {
+  --background-color: var(--black);
 }

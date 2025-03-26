@@ -29,10 +29,14 @@ hr {
 
 .layout {
   display: grid;
-  grid-template-columns: rem(300) 1fr;
+  grid-template-columns: 0 1fr;
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header header"
     "sidebar main"
     "sidebar main";
+
+  &:has(.sidebar.open) {
+    grid-template-columns: rem(300) 1fr;
+  }
 }
