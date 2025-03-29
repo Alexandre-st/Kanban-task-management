@@ -1,12 +1,17 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { createRootRouteWithContext, Outlet} from '@tanstack/react-router';
+import {AuthContext} from "../contexts/AuthContext.tsx";
 import { SidebarProvider } from "../contexts/LayoutContext.tsx";
-import {ThemeProvider} from "../contexts/ThemeContext.tsx";
+import { ThemeProvider } from "../contexts/ThemeContext.tsx";
 import { Header } from "../layouts/Header.tsx";
 import { Sidebar } from "../layouts/Sidebar.tsx";
-import {NotFound} from "../NotFound.tsx";
+import { NotFound } from "../NotFound.tsx";
 // import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
-export const Route = createRootRoute({
+interface MyRouterContext {
+    auth: AuthContext;
+}
+
+export const Route = createRootRouteWithContext<MyRouterContext>()({
     component: () => (
         <ThemeProvider defaultTheme="system" storageKey="theme">
             <SidebarProvider>
@@ -17,7 +22,7 @@ export const Route = createRootRoute({
             </SidebarProvider>
         </ThemeProvider>
     ),
-    notFoundComponent: () => <NotFound />
+    notFoundComponent: () => <NotFound />,
 });
 {/*<div>
                 <Link to="/">
