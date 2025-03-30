@@ -16,6 +16,10 @@ html {
   }
 }
 
+body {
+  background-color: var(--background-color);
+}
+
 /* === CONTAINER & LAYOUT === */
 .container {
   @include container;
