@@ -10,9 +10,10 @@ import { createServerFn } from '@tanstack/react-start';
 import { ReactNode } from "react";
 import { DefaultCatchBoundary } from '../components/DefaultCatchBoundary';
 import { NotFound } from '../components/NotFound';
-import {SidebarProvider} from "../contexts/LayoutContext";
-import {ThemeProvider} from "../contexts/ThemeContext";
-import Layout from "../layout";
+import { SidebarProvider } from "../contexts/LayoutContext";
+import { ThemeProvider } from "../contexts/ThemeContext";
+import { Header } from "../layouts/Header";
+import { Sidebar } from "../layouts/Sidebar";
 // import appCss from '../styles/app.css?url'
 import { seo } from '../utils/seo';
 import { getSupabaseServerClient } from '../utils/supabase';
@@ -89,11 +90,15 @@ export const Route = createRootRoute({
 
 function RootComponent() {
     return (
-        <Layout>
-            <RootDocument>
-                <Outlet />
-            </RootDocument>
-        </Layout>
+        <ThemeProvider defaultTheme="system" storageKey="theme">
+            <SidebarProvider>
+                <RootDocument>
+                    <Header />
+                    <Sidebar />
+                    <Outlet />
+                </RootDocument>
+            </SidebarProvider>
+        </ThemeProvider>
     )
 }
 
@@ -105,17 +110,17 @@ function RootDocument({ children }: { children: ReactNode }) {
         <head>
             <HeadContent />
         </head>
-        <body>
-        <div className="p-2 flex gap-2 text-lg">
-            <Link
-                to="/"
-                activeProps={{
-                    className: 'font-bold',
-                }}
-                activeOptions={{ exact: true }}
-            >
-                Home
-            </Link>{' '}
+        <body className="layout">
+        {/*<div className="p-2 flex gap-2 text-lg">*/}
+        {/*    <Link*/}
+        {/*        to="/"*/}
+        {/*        activeProps={{*/}
+        {/*            className: 'font-bold',*/}
+        {/*        }}*/}
+        {/*        activeOptions={{ exact: true }}*/}
+        {/*    >*/}
+        {/*        Home*/}
+        {/*    </Link>{' '}*/}
             {/*<Link*/}
             {/*    to="/posts"*/}
             {/*    activeProps={{*/}
@@ -124,18 +129,18 @@ function RootDocument({ children }: { children: ReactNode }) {
             {/*>*/}
             {/*    Posts*/}
             {/*</Link>*/}
-            <div className="ml-auto">
-                {user ? (
-                    <>
-                        <span className="mr-2">{user.email}</span>
-                        <Link to="/logout">Logout</Link>
-                    </>
-                ) : (
-                    <Link to="/login">Login</Link>
-                )}
-            </div>
-        </div>
-        <hr />
+        {/*    <div className="ml-auto">*/}
+        {/*        {user ? (*/}
+        {/*            <>*/}
+        {/*                <span className="mr-2">{user.email}</span>*/}
+        {/*                <Link to="/logout">Logout</Link>*/}
+        {/*            </>*/}
+        {/*        ) : (*/}
+        {/*            <Link to="/login">Login</Link>*/}
+        {/*        )}*/}
+        {/*    </div>*/}
+        {/*</div>*/}
+        {/*<hr />*/}
         {/*<ThemeProvider defaultTheme="system" storageKey="theme">*/}
         {/*    <SidebarProvider>*/}
                 {children}

@@ -27,8 +27,12 @@
 /* === THEME SWITCHER === */
 [data-theme='light'] {
   --background-color: var(--white);
+  --main-background-color: var(--light-grey-light-bg);
+  --lines: var(--lines-light);
 }
 
 [data-theme='dark'] {
-  --background-color: var(--black);
+  --background-color: var(--dark-grey);
+  --main-background-color: var(--very-dark-grey-dark-bg);
+  --lines: var(--lines-dark);
 }

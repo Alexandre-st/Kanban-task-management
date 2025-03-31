@@ -39,6 +39,7 @@ hr {
     "header header"
     "sidebar main"
     "sidebar main";
+  height: 100svh;
 
   &:has(.sidebar.open) {
     grid-template-columns: rem(300) 1fr;
