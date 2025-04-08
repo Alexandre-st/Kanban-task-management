@@ -1,13 +1,13 @@
 @use '../global/mixins' as *;
 
 .sidebar {
-  grid-area: sidebar;
-  background-color: var(--background-color);
-  //grid-template-areas: rem(300);
-  //grid-template-columns: rem(300) 1fr;
-  overflow-y: auto;
-  border-right: 1px solid var(--lines);
-  //position: fixed;
-  //top: var(--header-height);
-  //bottom: 0;
+  display: none;
+  
+  @include media-breakpoint-up(lg) {
+    display: block;
+    grid-area: sidebar;
+    background-color: var(--background-color);
+    overflow-y: auto;
+    border-right: 1px solid var(--lines);
+  }
 }

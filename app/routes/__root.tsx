@@ -1,17 +1,11 @@
-import {
-    HeadContent,
-    Link,
-    Outlet,
-    Scripts,
-    createRootRoute,
-} from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import { createServerFn } from '@tanstack/react-start';
+import { HeadContent, Outlet, createRootRoute } from '@tanstack/react-router';
+import {createServerFn, Scripts} from '@tanstack/react-start';
 import { ReactNode } from "react";
 import { DefaultCatchBoundary } from '../components/DefaultCatchBoundary';
 import { NotFound } from '../components/NotFound';
 import { SidebarProvider } from "../contexts/LayoutContext";
 import { ThemeProvider } from "../contexts/ThemeContext";
+import { UserProvider } from "../contexts/UserContext";
 import { Header } from "../layouts/Header";
 import { Sidebar } from "../layouts/Sidebar";
 // import appCss from '../styles/app.css?url'
@@ -20,12 +14,12 @@ import { getSupabaseServerClient } from '../utils/supabase';
 import '../styles/index.scss';
 
 // @ts-ignore
-const fetchUser = createServerFn({ method: 'GET' }).handler(async () => {
+const fetchUser = createServerFn({method: 'GET'}).handler(async () => {
     const supabase = getSupabaseServerClient();
-    const { data, error: _error } = await supabase.auth.getUser();
+    const {data, error: _error} = await supabase.auth.getUser();
 
     if (!data.user?.email) {
-        return null
+        return null;
     }
 
     return data.user;
@@ -48,7 +42,7 @@ export const Route = createRootRoute({
             }),
         ],
         links: [
-            { rel: 'stylesheet' }, // A rajouter le href du build href: appCss, il y a aussi un import spécifique
+            {rel: 'stylesheet'}, // A rajouter le href du build href: appCss, il y a aussi un import spécifique
             {
                 rel: 'apple-touch-icon',
                 sizes: '180x180',
@@ -67,7 +61,7 @@ export const Route = createRootRoute({
                 href: '/favicon-16x16.png',
             },
             // { rel: 'manifest', href: '/site.webmanifest', color: '#fffff' },
-            { rel: 'icon', href: '/favicon.ico' },
+            {rel: 'icon', href: '/favicon.ico'},
         ],
     }),
     beforeLoad: async () => {
@@ -84,70 +78,37 @@ export const Route = createRootRoute({
             </RootDocument>
         )
     },
-    notFoundComponent: () => <NotFound />,
+    notFoundComponent: () => <NotFound/>,
     component: RootComponent,
 })
 
 function RootComponent() {
+    const { user } = Route.useRouteContext();
+
     return (
         <ThemeProvider defaultTheme="system" storageKey="theme">
-            <SidebarProvider>
-                <RootDocument>
-                    <Header />
-                    <Sidebar />
-                    <Outlet />
-                </RootDocument>
-            </SidebarProvider>
+            <UserProvider user={user}>
+                <SidebarProvider>
+                    <RootDocument>
+                        <Header/>
+                        <Sidebar/>
+                        <Outlet/>
+                    </RootDocument>
+                </SidebarProvider>
+            </UserProvider>
         </ThemeProvider>
     )
 }
 
 function RootDocument({ children }: { children: ReactNode }) {
-    const { user } = Route.useRouteContext()
-
     return (
         <html>
         <head>
             <HeadContent />
         </head>
         <body className="layout">
-        {/*<div className="p-2 flex gap-2 text-lg">*/}
-        {/*    <Link*/}
-        {/*        to="/"*/}
-        {/*        activeProps={{*/}
-        {/*            className: 'font-bold',*/}
-        {/*        }}*/}
-        {/*        activeOptions={{ exact: true }}*/}
-        {/*    >*/}
-        {/*        Home*/}
-        {/*    </Link>{' '}*/}
-            {/*<Link*/}
-            {/*    to="/posts"*/}
-            {/*    activeProps={{*/}
-            {/*        className: 'font-bold',*/}
-            {/*    }}*/}
-            {/*>*/}
-            {/*    Posts*/}
-            {/*</Link>*/}
-        {/*    <div className="ml-auto">*/}
-        {/*        {user ? (*/}
-        {/*            <>*/}
-        {/*                <span className="mr-2">{user.email}</span>*/}
-        {/*                <Link to="/logout">Logout</Link>*/}
-        {/*            </>*/}
-        {/*        ) : (*/}
-        {/*            <Link to="/login">Login</Link>*/}
-        {/*        )}*/}
-        {/*    </div>*/}
-        {/*</div>*/}
-        {/*<hr />*/}
-        {/*<ThemeProvider defaultTheme="system" storageKey="theme">*/}
-        {/*    <SidebarProvider>*/}
-                {children}
-        {/*<Layout children={children} />*/}
-        {/*    </SidebarProvider>*/}
-        {/*</ThemeProvider>*/}
-        <TanStackRouterDevtools position="bottom-right" />
+            {children}
+        {/*<TanStackRouterDevtools position="bottom-right"/>*/}
         <Scripts />
         </body>
         </html>

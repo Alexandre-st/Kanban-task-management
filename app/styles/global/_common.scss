@@ -37,11 +37,19 @@ hr {
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header header"
-    "sidebar main"
-    "sidebar main";
+    "main main";
   height: 100svh;
 
-  &:has(.sidebar.open) {
-    grid-template-columns: rem(300) 1fr;
+  @include media-breakpoint-up(lg) {
+    grid-template-areas:
+    "header header"
+    "sidebar main"
+    "sidebar main";
+  }
+
+  @include media-breakpoint-up(lg) {
+    &:has(.sidebar.open) {
+      grid-template-columns: rem(300) 1fr;
+    }
   }
 }
